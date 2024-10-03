@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17 for x64
@@ -19,3 +19,5 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
+      - name: compile
+        run: mvn -B clean compile
