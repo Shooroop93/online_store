@@ -36,7 +36,6 @@ replay_pid*
 build
 out
 
-
 #Idea
 *.iml
 *.iws
