@@ -19,3 +19,5 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
+      - name: compile
+        run: mvn -B clean compile
