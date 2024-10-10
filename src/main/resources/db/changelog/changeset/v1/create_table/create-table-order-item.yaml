@@ -1,0 +1,80 @@
+databaseChangeLog:
+  - changeSet:
+      id: create table order item
+      author: Sergeev Roman
+      changes:
+        - createTable:
+            tableName: order_item
+            remarks: Товары в заказе
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: true
+                  remarks: Идентификатор элемента заказа
+              - column:
+                  name: order_id
+                  type: bigint
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: false
+                    nullable: true
+                  remarks: Ссылка на заказ
+              - column:
+                  name: product_id
+                  type: bigint
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: false
+                    nullable: true
+                  remarks: Ссылка на товар
+              - column:
+                  name: quantity
+                  type: int
+                  autoIncrement: false
+                  defaultValue: 0
+                  constraints:
+                    primaryKey: false
+                    nullable: true
+                  remarks: Количество единиц товара в заказе
+              - column:
+                  name: price
+                  type: decimal
+                  autoIncrement: false
+                  defaultValue: 0
+                  constraints:
+                    primaryKey: false
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: order_item
+            baseColumnNames: order_id
+            constraintName: fk_order_id_order_item
+            referencedTableName: order
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: order_item
+            baseColumnNames: product_id
+            constraintName: fk_product_id_order_item
+            referencedTableName: product
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+  - changeSet:
+      id: add constraint check quantity positive
+      author: Sergeev Roman
+      changes:
+        - sql:
+            sql: ALTER TABLE "order_item" ADD CONSTRAINT check_quantity_positive CHECK (quantity >= 0);
+
+  - changeSet:
+      id: add constraint check price positive
+      author: Sergeev Roman
+      changes:
+        - sql:
+            sql: ALTER TABLE "order_item" ADD CONSTRAINT check_price_positive CHECK (price >= 0);

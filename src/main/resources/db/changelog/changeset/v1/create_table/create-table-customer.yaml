@@ -1,0 +1,47 @@
+databaseChangeLog:
+  - changeSet:
+      id: create table customer
+      author: Sergeev Roman
+      changes:
+        - createTable:
+            tableName: customer
+            remarks: Клиенты
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+                  remarks: Идентификатор клиента
+              - column:
+                  name: first_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                  remarks: Имя клиента
+              - column:
+                  name: last_name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                  remarks: Фамилия клиента
+              - column:
+                  name: email
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                  remarks: Электронная почта клиента
+              - column:
+                  name: phone
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                  remarks: Телефонный номер клиента
+              - column:
+                  name: address
+                  type: varchar
+                  constraints:
+                    nullable: false
+                  remarks: Адрес доставки

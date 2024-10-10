@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/v1/create_tablecreate-table-customer.yaml
+  - include:
+      file: db/changelog/changeset/v1/create_tablecreate-table-product.yaml
+  - include:
+      file: db/changelog/changeset/v1/create_tablecreate-table-order.yaml
+  - include:
+      file: db/changelog/changeset/v1/create_tablecreate-table-order-item.yaml
