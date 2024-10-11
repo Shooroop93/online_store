@@ -1,4 +1,4 @@
-name: Build
+name: mvn clean compile
 
 on:
   pull_request:
