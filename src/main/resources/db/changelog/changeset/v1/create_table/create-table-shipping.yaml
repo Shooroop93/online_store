@@ -72,6 +72,6 @@ databaseChangeLog:
             baseTableName: shipping
             baseColumnNames: order_id
             constraintName: fk_order_id_shipping
-            referencedTableName: order
+            referencedTableName: orders
             referencedColumnNames: id
             onDelete: CASCADE

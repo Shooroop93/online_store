@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create table order
+      id: create table orders
       author: Sergeev Roman
       changes:
         - createTable:
-            tableName: order
+            tableName: orders
             remarks: Заказы
             columns:
               - column:
@@ -52,7 +52,7 @@ databaseChangeLog:
                   remarks: Дата и время последнего обновления заказа
 
         - addForeignKeyConstraint:
-            baseTableName: order
+            baseTableName: orders
             baseColumnNames: customer_id
             constraintName: fk_customer_id_order
             referencedTableName: customer
@@ -64,4 +64,4 @@ databaseChangeLog:
       author: Sergeev Roman
       changes:
         - sql:
-            sql: ALTER TABLE "order" ADD CONSTRAINT check_total_amount_positive CHECK (total_amount >= 0);
+            sql: ALTER TABLE "orders" ADD CONSTRAINT check_total_amount_positive CHECK (total_amount >= 0);

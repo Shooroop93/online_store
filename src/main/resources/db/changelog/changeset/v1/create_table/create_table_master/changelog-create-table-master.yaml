@@ -4,7 +4,7 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/v1/create_table/create-table-product.yaml
   - include:
-      file: db/changelog/changeset/v1/create_table/create-table-order.yaml
+      file: db/changelog/changeset/v1/create_table/create-table-orders.yaml
   - include:
       file: db/changelog/changeset/v1/create_table/create-table-order-item.yaml
   - include:
