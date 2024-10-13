@@ -58,7 +58,7 @@ databaseChangeLog:
             baseTableName: payment
             baseColumnNames: order_id
             constraintName: fk_order_id_payment
-            referencedTableName: order
+            referencedTableName: orders
             referencedColumnNames: id
             onDelete: CASCADE
 
