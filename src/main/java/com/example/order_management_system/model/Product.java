@@ -8,10 +8,8 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.CascadeType.*;
 
 @Entity
 @Table(name = "product")
