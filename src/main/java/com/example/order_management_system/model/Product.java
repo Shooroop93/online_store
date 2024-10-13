@@ -5,8 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
+import static jakarta.persistence.CascadeType.*;
 
 @Entity
 @Table(name = "product")
@@ -32,4 +37,8 @@ public class Product {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @OneToMany(mappedBy = "product")
+    @Cascade({org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.PERSIST})
+    private List<OrderItem> orderItemList;
 }

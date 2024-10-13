@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -39,4 +41,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer owner;
+
+    @OneToMany(mappedBy = "orders")
+    private List<OrderItem> orderItemList;
+
+    @OneToOne(mappedBy = "order")
+    private Shipping shipping;
 }

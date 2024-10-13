@@ -29,14 +29,14 @@ public class OrderService {
     }
 
     @Transactional
-    public void save(Order customer) {
-        orderRepository.save(customer);
+    public void save(Order order) {
+        orderRepository.save(order);
     }
 
     @Transactional
-    public void update(int id, Order updateCustomer) {
-        updateCustomer.setId(id);
-        orderRepository.save(updateCustomer);
+    public void update(int id, Order updateOrder) {
+        updateOrder.setId(id);
+        orderRepository.save(updateOrder);
     }
 
     @Transactional
