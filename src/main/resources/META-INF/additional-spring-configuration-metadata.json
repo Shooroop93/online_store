@@ -1,0 +1,7 @@
+{
+  "properties": [{
+    "name" : "application.notices.health",
+    "type": "java.lang.Q",
+    "description": "Returns the value when a GET call to /health is invoke123d."
+  }]
+}
