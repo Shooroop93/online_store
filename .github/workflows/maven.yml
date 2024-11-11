@@ -20,4 +20,4 @@ jobs:
           distribution: 'temurin'
           architecture: x64
       - name: compile
-        run: mvn -B clean compile test -P no-liquibase
+        run: mvn -B clean compile test
