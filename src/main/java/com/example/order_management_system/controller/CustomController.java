@@ -1,5 +1,6 @@
 package com.example.order_management_system.controller;
 
+import com.example.order_management_system.controller.base_controller.BaseController;
 import com.example.order_management_system.dto.registration.request.RegistrationRequest;
 import com.example.order_management_system.dto.registration.response.MessageError;
 import com.example.order_management_system.dto.registration.response.RegistrationResponse;
@@ -14,7 +15,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +22,8 @@ import java.util.List;
 import static java.lang.String.format;
 
 @Controller
-@RequestMapping(value = "/v1/customer/", consumes = "application/json", produces = "application/json")
 @Slf4j
-public class CustomController {
+public class CustomController extends BaseController {
 
     private final CustomerService customerService;
 
@@ -33,7 +32,7 @@ public class CustomController {
         this.customerService = customerService;
     }
 
-    @PostMapping("/reg")
+    @PostMapping(value = "/reg", consumes = "application/json", produces = "application/json")
     public ResponseEntity<RegistrationResponse> saveCustomer(@Validated @RequestBody RegistrationRequest user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return handlerValidationErrors(bindingResult.getFieldErrors());
