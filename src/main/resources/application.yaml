@@ -4,7 +4,7 @@ spring:
   application:
     name: online_store
   liquibase:
-    enabled: false
+    enabled: true
     change-log: classpath:/db/changelog/changelog-master.yaml
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect

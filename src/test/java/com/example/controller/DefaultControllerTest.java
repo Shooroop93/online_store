@@ -29,6 +29,7 @@ public class DefaultControllerTest {
                 .andExpect(content().string(healthMessage));
     }
 
+
     @Test
     public void checkConstantMessageTest() throws Exception {
         mockMvc.perform(get("/api/v1/store/health"))
