@@ -21,3 +21,5 @@ jobs:
           architecture: x64
       - name: compile
         run: mvn -B clean compile
+      - name: run_test
+        run: mvn test
