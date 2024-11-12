@@ -21,7 +21,6 @@ class DefaultControllerTest {
 
     @Test
     public void checkMessageForApplicationYamlTest() throws Exception {
-
         mockMvc.perform(get("/api/v1/store/health"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(healthMessage));
