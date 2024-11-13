@@ -31,9 +31,9 @@ public class CustomerService {
     }
 
     @Transactional
-    public int save(RegistrationRequest user) {
+    public Customer save(RegistrationRequest user) {
         Customer customer = new Customer(user.getName(), user.getSurname(), user.getEmail(), user.getPhone(), user.getPhone());
-        return customerRepository.save(customer).getId();
+        return customerRepository.save(customer);
     }
 
     @Transactional

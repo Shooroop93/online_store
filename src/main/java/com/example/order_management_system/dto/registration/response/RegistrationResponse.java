@@ -20,4 +20,9 @@ public class RegistrationResponse {
     public RegistrationResponse(MessageError error) {
         this.error = error;
     }
+
+    public RegistrationResponse(int id, String message) {
+        this.id = id;
+        this.message = message;
+    }
 }
