@@ -1,6 +1,5 @@
 package com.example.order_management_system.service;
 
-import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.model.OrderItem;
 import com.example.order_management_system.repository.OrderItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import java.util.List;
 @Service
 public class OrderItemService{
 
-    private OrderItemRepository orderItemRepository;
+    private final OrderItemRepository orderItemRepository;
 
     @Autowired
     public OrderItemService(OrderItemRepository orderItemRepository) {

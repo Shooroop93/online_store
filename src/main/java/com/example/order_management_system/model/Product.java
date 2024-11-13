@@ -10,7 +10,6 @@ import org.hibernate.annotations.Cascade;
 import java.math.BigDecimal;
 import java.util.List;
 
-
 @Entity
 @Table(name = "product")
 @Getter

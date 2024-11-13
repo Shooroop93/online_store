@@ -1,6 +1,5 @@
 package com.example.order_management_system.service;
 
-import com.example.order_management_system.model.Order;
 import com.example.order_management_system.model.Payment;
 import com.example.order_management_system.repository.PaymentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import java.util.List;
 @Service
 public class PaymentService {
 
-    private PaymentRepository paymentRepository;
+    private final PaymentRepository paymentRepository;
 
     @Autowired
     public PaymentService(PaymentRepository paymentRepository) {
