@@ -15,10 +15,10 @@ import java.util.ArrayList;
 import static java.lang.String.format;
 
 @ControllerAdvice(annotations = {CustomControllerHandler.class})
-public class CustomControllerAdvice {
+public class ValidatedRequestOrResponseAdvice {
 
     @ExceptionHandler(ExceptionBadRequestForRequisition.class)
-    public ResponseEntity<RegistrationResponse> handleBindExceptionBadRequest(BindException exception) {
+    public ResponseEntity<RegistrationResponse> handleValidateException(BindException exception) {
         RegistrationResponse response = new RegistrationResponse(new MessageError(new ArrayList<>()));
 
         exception.getFieldErrors().forEach(fieldError ->
