@@ -1,6 +1,6 @@
 package com.example.order_management_system.controller.advice;
 
-import com.example.order_management_system.controller.ExceptionBadRequestForRequisition;
+import com.example.order_management_system.controller.exception.ExceptionBadRequestForRequisition;
 import com.example.order_management_system.dto.registration.response.MessageError;
 import com.example.order_management_system.dto.registration.response.RegistrationResponse;
 import lombok.RequiredArgsConstructor;

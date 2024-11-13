@@ -1,6 +1,7 @@
 package com.example.order_management_system.controller;
 
 import com.example.order_management_system.controller.base_controller.BaseController;
+import com.example.order_management_system.controller.exception.ExceptionBadRequestForRequisition;
 import com.example.order_management_system.dto.registration.request.RegistrationRequest;
 import com.example.order_management_system.dto.registration.response.MessageError;
 import com.example.order_management_system.dto.registration.response.RegistrationResponse;
@@ -33,7 +34,7 @@ public class CustomController extends BaseController {
         if (bindingResult.hasErrors()) {
             throw new ExceptionBadRequestForRequisition(bindingResult);
         }
-        
+
         try {
             Customer customer = customerService.save(user);
             RegistrationResponse response = new RegistrationResponse(customer.getId(), format("Пользователь с email %s успешно создан", customer.getEmail()));
