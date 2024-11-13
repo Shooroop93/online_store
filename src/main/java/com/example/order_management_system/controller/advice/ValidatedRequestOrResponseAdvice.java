@@ -1,7 +1,7 @@
 package com.example.order_management_system.controller.advice;
 
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
-import com.example.order_management_system.controller.exception.ExceptionBadRequestForRequisition;
+import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
 import com.example.order_management_system.dto.registration.response.MessageError;
 import com.example.order_management_system.dto.registration.response.RegistrationResponse;
 import org.springframework.http.HttpStatus;
@@ -17,7 +17,7 @@ import static java.lang.String.format;
 @ControllerAdvice(annotations = {CustomControllerHandler.class})
 public class ValidatedRequestOrResponseAdvice {
 
-    @ExceptionHandler(ExceptionBadRequestForRequisition.class)
+    @ExceptionHandler(ExceptionValidatedRequestOrResponse.class)
     public ResponseEntity<RegistrationResponse> handleValidateException(BindException exception) {
         RegistrationResponse response = new RegistrationResponse(new MessageError(new ArrayList<>()));
 

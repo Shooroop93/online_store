@@ -2,7 +2,7 @@ package com.example.order_management_system.controller;
 
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.base_controller.BaseController;
-import com.example.order_management_system.controller.exception.ExceptionBadRequestForRequisition;
+import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
 import com.example.order_management_system.dto.registration.request.RegistrationRequest;
 import com.example.order_management_system.dto.registration.response.MessageError;
 import com.example.order_management_system.dto.registration.response.RegistrationResponse;
@@ -31,10 +31,9 @@ public class CustomController extends BaseController {
     private final CustomerService customerService;
 
     @PostMapping(value = "/reg", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<?> saveCustomer(@Validated @RequestBody RegistrationRequest user, BindingResult bindingResult)
-            throws ExceptionBadRequestForRequisition {
+    public ResponseEntity<?> saveCustomer(@Validated @RequestBody RegistrationRequest user, BindingResult bindingResult) throws ExceptionValidatedRequestOrResponse {
         if (bindingResult.hasErrors()) {
-            throw new ExceptionBadRequestForRequisition(bindingResult);
+            throw new ExceptionValidatedRequestOrResponse(bindingResult);
         }
 
         try {
