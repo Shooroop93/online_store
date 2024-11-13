@@ -1,9 +1,9 @@
 package com.example.order_management_system.controller.advice;
 
+import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.exception.ExceptionBadRequestForRequisition;
 import com.example.order_management_system.dto.registration.response.MessageError;
 import com.example.order_management_system.dto.registration.response.RegistrationResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
@@ -14,8 +14,7 @@ import java.util.ArrayList;
 
 import static java.lang.String.format;
 
-@ControllerAdvice
-@RequiredArgsConstructor
+@ControllerAdvice(annotations = {CustomControllerHandler.class})
 public class CustomControllerAdvice {
 
     @ExceptionHandler(ExceptionBadRequestForRequisition.class)

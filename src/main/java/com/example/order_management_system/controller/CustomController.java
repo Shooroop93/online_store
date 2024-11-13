@@ -1,5 +1,6 @@
 package com.example.order_management_system.controller;
 
+import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.base_controller.BaseController;
 import com.example.order_management_system.controller.exception.ExceptionBadRequestForRequisition;
 import com.example.order_management_system.dto.registration.request.RegistrationRequest;
@@ -24,6 +25,7 @@ import static java.lang.String.format;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
+@CustomControllerHandler
 public class CustomController extends BaseController {
 
     private final CustomerService customerService;
