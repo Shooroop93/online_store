@@ -28,7 +28,7 @@ class CustomControllerTest {
 
     private RegistrationRequest registrationRequest;
 
-    private String testRequest = """
+    private final String testRequest = """
             {
                 "name" : "test",
                 "surname" : "testov",
@@ -51,35 +51,35 @@ class CustomControllerTest {
     }
 
     @Test
-    void saveCustomer_no_valid_name() throws Exception {
+    void saveCustomer_no_valid_missing_parameter_name() throws Exception {
         registrationRequest.setName(null);
         mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void saveCustomer_no_valid_surname() throws Exception {
+    void saveCustomer_no_valid_missing_parameter_surname() throws Exception {
         registrationRequest.setSurname(null);
         mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void saveCustomer_no_valid_phone() throws Exception {
+    void saveCustomer_no_valid_missing_parameter_phone() throws Exception {
         registrationRequest.setPhone(null);
         mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void saveCustomer_no_valid_email() throws Exception {
+    void saveCustomer_no_valid_missing_parameter_email() throws Exception {
         registrationRequest.setEmail(null);
         mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void saveCustomer_no_valid_address() throws Exception {
+    void saveCustomer_no_valid_missing_parameter_address() throws Exception {
         registrationRequest.setAddress(null);
         mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
