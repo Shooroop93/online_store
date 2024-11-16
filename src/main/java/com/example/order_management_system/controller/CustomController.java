@@ -1,7 +1,6 @@
 package com.example.order_management_system.controller;
 
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
-import com.example.order_management_system.controller.base_controller.BaseController;
 import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
 import com.example.order_management_system.dto.registration.request.RegistrationRequest;
 import com.example.order_management_system.dto.registration.response.MessageError;
@@ -18,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -28,7 +28,8 @@ import static java.lang.String.format;
 @Slf4j
 @RequiredArgsConstructor
 @CustomControllerHandler
-public class CustomController extends BaseController {
+@RequestMapping(value = "/api/v1/store/")
+public class CustomController {
 
     private final CustomerService customerService;
     private final MessageSource messageSource;
