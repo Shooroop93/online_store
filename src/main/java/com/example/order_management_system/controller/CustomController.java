@@ -34,7 +34,7 @@ public class CustomController {
     private final CustomerService customerService;
     private final MessageSource messageSource;
 
-    @PostMapping(value = "/reg", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/reg", consumes = "application/json;charset=UTF-8", produces = "application/json;charset=UTF-8")
     public ResponseEntity<?> saveCustomer(@Validated @RequestBody RegistrationRequest user, BindingResult bindingResult, Locale locale) throws ExceptionValidatedRequestOrResponse {
         if (bindingResult.hasErrors()) {
             throw new ExceptionValidatedRequestOrResponse(bindingResult);

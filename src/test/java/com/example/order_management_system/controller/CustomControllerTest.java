@@ -1,6 +1,8 @@
 package com.example.order_management_system.controller;
 
 import com.example.order_management_system.dto.registration.request.RegistrationRequest;
+import com.example.order_management_system.dto.registration.response.MessageError;
+import com.example.order_management_system.dto.registration.response.RegistrationResponse;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.service.CustomerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +15,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -83,5 +90,36 @@ class CustomControllerTest {
         registrationRequest.setAddress(null);
         mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void saveCustomer_no_valid_missing_all_parameters() throws Exception {
+        RegistrationResponse expectedResponse = new RegistrationResponse(new MessageError(new ArrayList<>()));
+        expectedResponse.setId(-1);
+        List<String> errorList = expectedResponse.getError().getErrorList();
+        errorList.add("Поле = phone. Сообщение об ошибке: 'не должно равняться null'");
+        errorList.add("Поле = surname. Сообщение об ошибке: 'не должно равняться null'");
+        errorList.add("Поле = name. Сообщение об ошибке: 'не должно равняться null'");
+        errorList.add("Поле = email. Сообщение об ошибке: 'не должно равняться null'");
+        errorList.add("Поле = name. Сообщение об ошибке: 'не должно быть пустым'");
+        errorList.add("Поле = address. Сообщение об ошибке: 'не должно равняться null'");
+        errorList.add("Поле = surname. Сообщение об ошибке: 'не должно быть пустым'");
+
+        String emptyTestRequest = """
+                {
+                }
+                """;
+        String contentAsString = mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(emptyTestRequest))
+                .andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
+
+        RegistrationResponse responseActual = new ObjectMapper().readValue(contentAsString, RegistrationResponse.class);
+
+        Collections.sort(expectedResponse.getError().getErrorList());
+        Collections.sort(responseActual.getError().getErrorList());
+
+        assertEquals(
+                new ObjectMapper().writeValueAsString(expectedResponse),
+                new ObjectMapper().writeValueAsString(responseActual)
+        );
     }
 }
