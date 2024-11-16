@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: secrets
+  application:
+    name: online_store
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/changelog-master.yaml
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+server:
+  port : 8080
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+application:
+  notices:
+    health: UP

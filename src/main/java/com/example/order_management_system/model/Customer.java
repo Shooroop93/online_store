@@ -1,19 +1,17 @@
 package com.example.order_management_system.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
-@Entity
-@Table(name = "customer")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "customer")
 public class Customer {
 
     @Id
@@ -38,4 +36,21 @@ public class Customer {
 
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Order> orderList;
+
+    public Customer(String firstName, String lastName, String email, String phone, String address) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
+
+    public Customer(int id, String firstName, String lastName, String email, String phone, String address) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+    }
 }

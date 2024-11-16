@@ -57,4 +57,4 @@ out
  project.properties
  *.properties
  project.properties
-/src/main/resources/application.yaml
+ application-secrets.yml

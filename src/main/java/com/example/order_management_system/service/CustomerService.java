@@ -1,5 +1,6 @@
 package com.example.order_management_system.service;
 
+import com.example.order_management_system.dto.registration.request.RegistrationRequest;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.repository.CustomerRepository;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Service
 public class CustomerService {
 
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
     @Autowired
     public CustomerService(CustomerRepository customerRepository) {
@@ -30,8 +31,9 @@ public class CustomerService {
     }
 
     @Transactional
-    public void save(Customer customer) {
-        customerRepository.save(customer);
+    public Customer save(RegistrationRequest user) {
+        Customer customer = new Customer(user.getName(), user.getSurname(), user.getEmail(), user.getPhone(), user.getPhone());
+        return customerRepository.save(customer);
     }
 
     @Transactional
