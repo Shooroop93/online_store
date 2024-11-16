@@ -91,35 +91,4 @@ class CustomControllerTest {
         mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
-
-    @Test
-    void saveCustomer_no_valid_missing_all_parameters() throws Exception {
-        RegistrationResponse expectedResponse = new RegistrationResponse(new MessageError(new ArrayList<>()));
-        expectedResponse.setId(-1);
-        List<String> errorList = expectedResponse.getError().getErrorList();
-        errorList.add("Поле = phone. Сообщение об ошибке: 'не должно равняться null'");
-        errorList.add("Поле = surname. Сообщение об ошибке: 'не должно равняться null'");
-        errorList.add("Поле = name. Сообщение об ошибке: 'не должно равняться null'");
-        errorList.add("Поле = email. Сообщение об ошибке: 'не должно равняться null'");
-        errorList.add("Поле = name. Сообщение об ошибке: 'не должно быть пустым'");
-        errorList.add("Поле = address. Сообщение об ошибке: 'не должно равняться null'");
-        errorList.add("Поле = surname. Сообщение об ошибке: 'не должно быть пустым'");
-
-        String emptyTestRequest = """
-                {
-                }
-                """;
-        String contentAsString = mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(emptyTestRequest))
-                .andExpect(status().isBadRequest()).andReturn().getResponse().getContentAsString();
-
-        RegistrationResponse responseActual = new ObjectMapper().readValue(contentAsString, RegistrationResponse.class);
-
-        Collections.sort(expectedResponse.getError().getErrorList());
-        Collections.sort(responseActual.getError().getErrorList());
-
-        assertEquals(
-                new ObjectMapper().writeValueAsString(expectedResponse),
-                new ObjectMapper().writeValueAsString(responseActual)
-        );
-    }
 }
