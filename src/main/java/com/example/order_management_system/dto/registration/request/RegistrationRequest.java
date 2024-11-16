@@ -15,23 +15,23 @@ import org.hibernate.validator.constraints.Length;
 public class RegistrationRequest {
 
     @Length(min = 1, max = 30)
-    @NotNull(message = "не должно равняться null")
-    @NotEmpty(message = "не должно быть пустым")
+    @NotNull(message = "{application.dto.notNull}")
+    @NotEmpty(message = "{application.dto.notEmpty}")
     private String name;
 
     @Length(min = 1, max = 30)
-    @NotNull(message = "не должно равняться null")
-    @NotEmpty(message = "не должно быть пустым")
+    @NotNull(message = "{application.dto.notNull}")
+    @NotEmpty(message = "{application.dto.notEmpty}")
     private String surname;
 
-    @NotNull(message = "не должно равняться null")
+    @NotNull(message = "{application.dto.notNull}")
     @Email
     private String email;
 
-    @NotNull(message = "не должно равняться null")
+    @NotNull(message = "{application.dto.notNull}")
     private String address;
 
-    @NotNull(message = "не должно равняться null")
+    @NotNull(message = "{application.dto.notNull}")
     @Pattern(regexp = "^\\+\\d{1,3}\\s?\\(?\\d{1,4}\\)?[\\s.-]?\\d{1,4}[\\s.-]?\\d{1,4}[\\s.-]?\\d{1,9}$")
     private String phone;
 }
