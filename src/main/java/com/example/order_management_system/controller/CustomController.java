@@ -31,7 +31,7 @@ import static java.lang.String.format;
 @Slf4j
 @RequiredArgsConstructor
 @CustomControllerHandler
-@RequestMapping(value = "/api/v1/store/")
+@RequestMapping(value = "/api/v1/store/client/")
 public class CustomController {
 
     private final CustomerService customerService;
@@ -56,7 +56,7 @@ public class CustomController {
         }
     }
 
-    @GetMapping(value = "/custom/{id}")
+    @GetMapping(value = "/{id}", produces = "application/json;charset=UTF-8")
     public ResponseEntity<?> getCustomer(@PathVariable Long id, Locale locale) {
         RegistrationResponse response = customerService.findById(id, locale);
         return Objects.nonNull(response.getError()) ?
