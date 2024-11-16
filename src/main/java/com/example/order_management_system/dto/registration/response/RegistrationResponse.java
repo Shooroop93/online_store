@@ -6,13 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RegistrationResponse {
 
-    private int id = -1;
+    private long id = -1;
+    private List<Participant> participants;
     private String message;
     @JsonProperty("error")
     private MessageError error;
@@ -21,7 +24,7 @@ public class RegistrationResponse {
         this.error = error;
     }
 
-    public RegistrationResponse(int id, String message) {
+    public RegistrationResponse(long id, String message) {
         this.id = id;
         this.message = message;
     }

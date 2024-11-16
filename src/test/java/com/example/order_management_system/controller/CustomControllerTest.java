@@ -1,12 +1,12 @@
 package com.example.order_management_system.controller;
 
 import com.example.order_management_system.dto.registration.request.RegistrationRequest;
-import com.example.order_management_system.dto.registration.response.MessageError;
 import com.example.order_management_system.dto.registration.response.RegistrationResponse;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.service.CustomerService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +15,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Locale;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -90,5 +88,54 @@ class CustomControllerTest {
         registrationRequest.setAddress(null);
         mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
+    }
+
+    @SneakyThrows
+    @Test
+    void getCustomer_ok() {
+        String testResponse = """
+                {
+                  "id":-1,
+                  "participants":[
+                    {
+                      "id":12,
+                      "first_name":"test",
+                      "last_name":"testov",
+                      "email":"testov1@test.test",
+                      "phone":"+700000000001",
+                      "address":"+700000000001"
+                    }
+                  ]
+                }
+                """;
+
+        RegistrationResponse registrationResponse = new ObjectMapper().readValue(testResponse, RegistrationResponse.class);
+
+        when(customerService.findById(1, Locale.ENGLISH)).thenReturn(registrationResponse);
+
+        mockMvc.perform(get("/api/v1/store/custom/1"))
+                .andExpect(status().isOk());
+    }
+
+    @SneakyThrows
+    @Test
+    void getCustomer_not_found() {
+        String testResponse = """
+                {
+                    "id": 1298,
+                    "error": {
+                        "error_list": [
+                            "Пользователь с id 1298 не найден"
+                        ]
+                    }
+                }
+                """;
+
+        RegistrationResponse registrationResponse = new ObjectMapper().readValue(testResponse, RegistrationResponse.class);
+
+        when(customerService.findById(1, Locale.ENGLISH)).thenReturn(registrationResponse);
+
+        mockMvc.perform(get("/api/v1/store/custom/1"))
+                .andExpect(status().isNotFound());
     }
 }

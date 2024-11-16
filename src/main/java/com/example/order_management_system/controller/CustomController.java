@@ -15,12 +15,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Objects;
 
 import static java.lang.String.format;
 
@@ -51,5 +54,13 @@ public class CustomController {
             response.getError().getErrorList().add(format(messageConflict, user.getEmail()));
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
+    }
+
+    @GetMapping(value = "/custom/{id}")
+    public ResponseEntity<?> getCustomer(@PathVariable Long id, Locale locale) {
+        RegistrationResponse response = customerService.findById(id, locale);
+        return Objects.nonNull(response.getError()) ?
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(response) :
+                ResponseEntity.ok().body(response);
     }
 }
