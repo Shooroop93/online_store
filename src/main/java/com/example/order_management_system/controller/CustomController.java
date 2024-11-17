@@ -45,12 +45,12 @@ public class CustomController {
 
         try {
             Customer customer = customerService.save(user);
-            String messageCreated = messageSource.getMessage("application.controller.db.message.created", new Object[0], locale);
+            String messageCreated = messageSource.getMessage("application.controller.db.customer.message.created", new Object[0], locale);
             RegistrationResponse response = new RegistrationResponse(customer.getId(), format(messageCreated, customer.getEmail()));
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             RegistrationResponse response = new RegistrationResponse(new MessageError(new ArrayList<>()));
-            String messageConflict = messageSource.getMessage("application.controller.db.message.conflict", new Object[0], locale);
+            String messageConflict = messageSource.getMessage("application.controller.db.customer.message.conflict", new Object[0], locale);
             response.getError().getErrorList().add(format(messageConflict, user.getEmail()));
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }

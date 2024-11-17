@@ -37,6 +37,11 @@ public class CustomerService {
         return createAResponseForARequestToRetrieveACustomer(customer, id, locale);
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Customer> findById(long id) {
+        return customerRepository.findById(id);
+    }
+
     @Transactional
     public Customer save(RegistrationRequest user) {
         Customer customer = new Customer(user.getName(), user.getSurname(), user.getEmail(), user.getPhone(), user.getPhone());
@@ -59,7 +64,7 @@ public class CustomerService {
 
         if (customer.isEmpty()) {
             response = new RegistrationResponse(new MessageError(new ArrayList<>()));
-            String message = messageSource.getMessage("application.controller.db.message.get", new Object[0], locale);
+            String message = messageSource.getMessage("application.controller.db.customer.message.get", new Object[0], locale);
 
             response.setId(id);
             response.getError().getErrorList().add(format(message, id));
