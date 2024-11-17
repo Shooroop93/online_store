@@ -32,6 +32,7 @@ class CustomControllerTest {
     private CustomerService customerService;
 
     private RegistrationRequest registrationRequest;
+    private final String url = "/api/v1/store/client";
 
     private final String testRequest = """
             {
@@ -51,42 +52,42 @@ class CustomControllerTest {
     @Test
     void saveCustomer_valid() throws Exception {
         when(customerService.save(registrationRequest)).thenReturn(new Customer(1, "t", "e", "s@t.ru", "+700000000001", "test"));
-        mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(testRequest))
+        mockMvc.perform(post(url + "/reg").contentType(MediaType.APPLICATION_JSON).content(testRequest))
                 .andExpect(status().isCreated());
     }
 
     @Test
     void saveCustomer_no_valid_missing_parameter_name() throws Exception {
         registrationRequest.setName(null);
-        mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
+        mockMvc.perform(post(url + "/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void saveCustomer_no_valid_missing_parameter_surname() throws Exception {
         registrationRequest.setSurname(null);
-        mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
+        mockMvc.perform(post(url + "/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void saveCustomer_no_valid_missing_parameter_phone() throws Exception {
         registrationRequest.setPhone(null);
-        mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
+        mockMvc.perform(post(url + "/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void saveCustomer_no_valid_missing_parameter_email() throws Exception {
         registrationRequest.setEmail(null);
-        mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
+        mockMvc.perform(post(url + "/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     void saveCustomer_no_valid_missing_parameter_address() throws Exception {
         registrationRequest.setAddress(null);
-        mockMvc.perform(post("/api/v1/store/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
+        mockMvc.perform(post(url + "/reg").contentType(MediaType.APPLICATION_JSON).content(new ObjectMapper().writeValueAsString(registrationRequest)))
                 .andExpect(status().isBadRequest());
     }
 
@@ -95,7 +96,7 @@ class CustomControllerTest {
     void getCustomer_ok() {
         String testResponse = """
                 {
-                  "id":-1,
+                  "id":12,
                   "participants":[
                     {
                       "id":12,
@@ -111,9 +112,9 @@ class CustomControllerTest {
 
         RegistrationResponse registrationResponse = new ObjectMapper().readValue(testResponse, RegistrationResponse.class);
 
-        when(customerService.findById(1, Locale.ENGLISH)).thenReturn(registrationResponse);
+        when(customerService.findById(12, Locale.ENGLISH)).thenReturn(registrationResponse);
 
-        mockMvc.perform(get("/api/v1/store/custom/1"))
+        mockMvc.perform(get(url + "/12"))
                 .andExpect(status().isOk());
     }
 
@@ -133,9 +134,9 @@ class CustomControllerTest {
 
         RegistrationResponse registrationResponse = new ObjectMapper().readValue(testResponse, RegistrationResponse.class);
 
-        when(customerService.findById(1, Locale.ENGLISH)).thenReturn(registrationResponse);
+        when(customerService.findById(1298, Locale.ENGLISH)).thenReturn(registrationResponse);
 
-        mockMvc.perform(get("/api/v1/store/custom/1"))
+        mockMvc.perform(get(url + "/1298"))
                 .andExpect(status().isNotFound());
     }
 }

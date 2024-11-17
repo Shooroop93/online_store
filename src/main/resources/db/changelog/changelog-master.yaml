@@ -1,3 +1,5 @@
 databaseChangeLog:
   - include:
       file: db/changelog/changeset/v1/create_table/create_table_master/changelog-create-table-master.yaml
+  - include:
+      file: db/changelog/changeset/v1/added_constraints/added_constraints_master/changelog-added-constraints-master.yaml

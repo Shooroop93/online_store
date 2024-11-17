@@ -38,4 +38,8 @@ public class Product {
     @OneToMany(mappedBy = "product")
     @Cascade({org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.PERSIST})
     private List<OrderItem> orderItemList;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    private Customer ownerProduct;
 }

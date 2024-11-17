@@ -37,6 +37,9 @@ public class Customer {
     @OneToMany(mappedBy = "owner", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Order> orderList;
 
+    @OneToMany(mappedBy = "ownerProduct", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Product> productsList;
+
     public Customer(String firstName, String lastName, String email, String phone, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
