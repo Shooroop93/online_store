@@ -16,6 +16,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ShoppingCartRequest {
 
+    @JsonProperty("id_owner_shopping_cart")
+    private long idOwnerShoppingCart;
+
     @JsonProperty("item_list")
     @NotNull(message = "{application.dto.notNull}")
     @NotEmpty(message = "{application.dto.notEmpty}")

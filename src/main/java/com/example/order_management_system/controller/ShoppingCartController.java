@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +30,6 @@ public class ShoppingCartController {
 
     private final ShoppingCartService shoppingCartService;
 
-
     @PostMapping("/addItem")
     public ResponseEntity<?> addItem(@Validated @RequestBody ShoppingCartRequest shoppingCartRequest, BindingResult bindingResult, Locale locale)
             throws ExceptionValidatedRequestOrResponse {
@@ -43,6 +44,17 @@ public class ShoppingCartController {
             return ResponseEntity.status(HttpStatus.CREATED).body(shoppingCartResponse);
         } else {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(shoppingCartResponse);
+        }
+    }
+
+    @GetMapping("/getAllItem/{id}")
+    public ResponseEntity<?> getAllItem(@PathVariable long id, Locale locale) {
+        ShoppingCartResponse response = shoppingCartService.findById(id, locale);
+
+        if (Objects.isNull(response.getError())) {
+            return ResponseEntity.status(HttpStatus.OK).body(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 }
