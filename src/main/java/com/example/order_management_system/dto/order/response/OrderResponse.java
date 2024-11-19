@@ -1,4 +1,4 @@
-package com.example.order_management_system.dto.shopping_cart.response;
+package com.example.order_management_system.dto.order.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,21 +15,30 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ShoppingCartResponse {
+public class OrderResponse {
 
     @NotNull(message = "{application.dto.notNull}")
     @JsonProperty("id_owner_shopping_cart")
     private int idOwnerShoppingCart;
+
+    @JsonProperty("total_amount")
+    private BigDecimal totalAmount;
+
+    @JsonProperty("order_number")
+    private int orderNumber;
+
+    private String status;
 
     @JsonProperty("item_list")
     private List<ItemShoppingCart> itemList;
     private String message;
     private MessageError error;
 
-    @JsonProperty("total_amount")
-    private BigDecimal totalAmount;
+    public OrderResponse(int idOwnerShoppingCart) {
+        this.idOwnerShoppingCart = idOwnerShoppingCart;
+    }
 
-    public void addError(String message){
+    public void addError(String message) {
         if (this.error == null) {
             this.error = new MessageError(new ArrayList<>());
         }
@@ -41,9 +50,5 @@ public class ShoppingCartResponse {
             this.itemList = new ArrayList<>();
         }
         this.itemList.add(item);
-    }
-
-    public ShoppingCartResponse(int idOwnerShoppingCart) {
-        this.idOwnerShoppingCart = idOwnerShoppingCart;
     }
 }

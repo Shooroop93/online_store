@@ -17,7 +17,7 @@ import java.util.List;
 public class ShoppingCartRequest {
 
     @JsonProperty("id_owner_shopping_cart")
-    private long idOwnerShoppingCart;
+    private int idOwnerShoppingCart;
 
     @JsonProperty("item_list")
     @NotNull(message = "{application.dto.notNull}")

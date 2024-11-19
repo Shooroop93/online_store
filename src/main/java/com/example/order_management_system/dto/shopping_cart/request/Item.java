@@ -18,7 +18,7 @@ public class Item {
     @JsonProperty("owner_ID")
     @NotNull(message = "{application.dto.notNull}")
     @NotEmpty(message = "{application.dto.notEmpty}")
-    private long ownerId;
+    private int ownerId;
 
     @NotNull(message = "{application.dto.notNull}")
     @NotEmpty(message = "{application.dto.notEmpty}")

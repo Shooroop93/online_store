@@ -9,6 +9,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -20,6 +22,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
@@ -57,4 +60,34 @@ public class Order {
 
     @OneToOne(mappedBy = "order")
     private Shipping shipping;
+
+    public Order(Customer owner, String status, BigDecimal totalAmount) {
+        this.owner = owner;
+        this.status = status;
+        this.totalAmount = totalAmount;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(totalAmount, order.totalAmount) && Objects.equals(status, order.status) && Objects.equals(createdAt, order.createdAt) && Objects.equals(updatedAt, order.updatedAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(totalAmount, status, createdAt, updatedAt);
+    }
 }

@@ -50,6 +50,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<ShoppingCart> shoppingCarts;
 
+    public Customer(int id) {
+        this.id = id;
+    }
+
     public Customer(String firstName, String lastName, String email, String phone, String address) {
         this.firstName = firstName;
         this.lastName = lastName;

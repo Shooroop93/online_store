@@ -37,7 +37,7 @@ public class ShoppingCartService {
     }
 
     @Transactional(readOnly = true)
-    public ShoppingCartResponse findById(long id, Locale locale) {
+    public ShoppingCartResponse findById(int id, Locale locale) {
         ShoppingCartResponse shoppingCartResponse = new ShoppingCartResponse();
         Optional<Customer> customer = customerRepository.findById(id);
         shoppingCartResponse.setIdOwnerShoppingCart(id);
