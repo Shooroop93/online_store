@@ -11,7 +11,8 @@
    description (text) — Описание товара
    price (decimal) — Цена товара
    quantity (int) — Количество товара на складе
-3. Таблица order (Заказы)
+   owner_id (bigint, foreign key) - владелец товара
+3. Таблица orders (Заказы)
    id (PK, bigint, auto-increment) — Идентификатор заказа
    customer_id (FK, bigint) — Ссылка на клиента, который создал заказ
    total_amount (decimal) — Общая стоимость заказа
@@ -40,10 +41,15 @@
    status (varchar) — Статус доставки (например, "In Progress", "Delivered")
    shipped_at (timestamp) — Дата отправки
    delivered_at (timestamp) — Дата доставки
+7. Таблица shopping_card (Корзина для товара)
+   id (PK, bigint, auto-increment) - Идентификатор товара в корзине
+   customer_id (foreign key, bigint) — Ссылка на клиента
+   product_id (foreign key, bigint) - Ссылка на товар
+   count (bigint) - количество добавленного товара
 
 Ниже таблицы под вопросом ????????
 
-7. Таблица inventory (Инвентарь)
+8. Таблица inventory (Инвентарь)
    id (PK, bigint, auto-increment) — Идентификатор записи инвентаря
    product_id (FK, bigint) — Ссылка на товар
    quantity_in_stock (int) — Количество товара на складе
