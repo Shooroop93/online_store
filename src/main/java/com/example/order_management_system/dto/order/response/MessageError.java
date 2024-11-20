@@ -18,4 +18,9 @@ public class MessageError {
     public MessageError(List<String> errorList) {
         this.errorList = errorList;
     }
+
+    @Override
+    public String toString() {
+        return "errorList=" + errorList;
+    }
 }

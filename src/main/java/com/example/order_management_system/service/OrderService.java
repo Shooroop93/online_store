@@ -1,5 +1,6 @@
 package com.example.order_management_system.service;
 
+import com.example.order_management_system.constants.OrdersStatus;
 import com.example.order_management_system.dto.order.response.OrderResponse;
 import com.example.order_management_system.dto.shopping_cart.response.ItemShoppingCart;
 import com.example.order_management_system.dto.shopping_cart.response.ShoppingCartResponse;
@@ -15,13 +16,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 
+import static com.example.order_management_system.constants.OrdersStatus.PENDING;
 import static java.lang.String.format;
+import static org.apache.logging.log4j.Level.ERROR;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +39,6 @@ public class OrderService {
     private final ProductRepository productRepository;
 
     private final MessageSource messageSource;
-    private final OrderItemService orderItemService;
 
     @Transactional(readOnly = true)
     public List<Order> findAll() {
@@ -46,58 +51,40 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderResponse save(ShoppingCartResponse requestCreateOrder, Locale locale) {
+    public OrderResponse createOrder(ShoppingCartResponse requestCreateOrder, Locale locale) {
         OrderResponse orderResponse = new OrderResponse(requestCreateOrder.getIdOwnerShoppingCart());
-        BigDecimal totalAmount = BigDecimal.ZERO;
 
         if (requestCreateOrder.getItemList().isEmpty()) {
-            String message = messageSource.getMessage("application.controller.db.shopping_cart.message.get", new Object[0], locale);
+            String message = getLocalizedMessage("application.controller.db.shopping_cart.message.get", locale);
             orderResponse.addError(format(message, requestCreateOrder.getIdOwnerShoppingCart()));
+            orderResponse.setStatus(OrdersStatus.ERROR.name());
             return orderResponse;
         }
 
         Optional<Customer> customer = customerRepository.findById(requestCreateOrder.getIdOwnerShoppingCart());
 
         if (customer.isEmpty()) {
-            String message = messageSource.getMessage("application.controller.db.customer.message.get", new Object[0], locale);
+            String message = getLocalizedMessage("application.controller.db.customer.message.get", locale);
             orderResponse.addError(format(message, requestCreateOrder.getIdOwnerShoppingCart()));
+            orderResponse.setStatus(OrdersStatus.ERROR.name());
             return orderResponse;
         }
 
-        Order order = new Order();
-        order.setOwner(new Customer(requestCreateOrder.getIdOwnerShoppingCart()));
-        order.setStatus("Pending");
-        order.setTotalAmount(BigDecimal.ZERO);
-        Order save = orderRepository.save(order);
+        Order save = orderRepository.save(new Order(customer.get(), PENDING.name(), BigDecimal.ZERO));
 
-        for (ItemShoppingCart itemShoppingCart : requestCreateOrder.getItemList()) {
-            Product productDB = productRepository.findById(itemShoppingCart.getArticle()).get();
+        List<OrderItem> orderItemsList = new ArrayList<>();
+        List<Product> productList = new ArrayList<>();
 
-            if (productDB.getQuantity() < itemShoppingCart.getQuantity()) {
-                String message = messageSource.getMessage("application.controller.db.order.message.not_found", new Object[0], locale);
-                orderResponse.addError(format(message, itemShoppingCart.getArticle(), itemShoppingCart.getOwnerId()));
-                continue;
-            }
+        BigDecimal totalAmount = prepareDataForItemListAndProduct(save, requestCreateOrder, locale, orderResponse, orderItemsList, productList);
 
-            OrderItem orderItem = new OrderItem();
-            orderItem.setOrders(save);
-            orderItem.setProduct(productDB);
-            orderItem.setQuantity(itemShoppingCart.getQuantity());
-            orderItem.setPrice(itemShoppingCart.getPrice());
-            orderItemRepository.save(orderItem);
-
-            productDB.setQuantity(productDB.getQuantity() - itemShoppingCart.getQuantity());
-            productRepository.save(productDB);
-
-            totalAmount = totalAmount.add(itemShoppingCart.getPrice().multiply(BigDecimal.valueOf(itemShoppingCart.getQuantity())));
+        if (Objects.nonNull(orderResponse.getError())) {
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            completeOrderResponse(orderResponse, BigDecimal.ZERO, -1, ERROR.name());
+        } else {
+            save.setTotalAmount(totalAmount);
+            writeDataToTheDatabase(orderItemsList, productList, save);
+            completeOrderResponse(orderResponse, totalAmount, save.getId(), save.getStatus());
         }
-
-        order.setTotalAmount(totalAmount);
-        orderRepository.save(order);
-
-        orderResponse.setTotalAmount(totalAmount);
-        orderResponse.setOrderNumber(order.getId());
-        orderResponse.setStatus(order.getStatus());
 
         return orderResponse;
     }
@@ -111,5 +98,56 @@ public class OrderService {
     @Transactional
     public void removeById(int id) {
         orderRepository.deleteById(id);
+    }
+
+    private String getLocalizedMessage(String messageKey, Locale locale, Object... args) {
+        return messageSource.getMessage(messageKey, args, locale);
+    }
+
+    private OrderItem createOrderItem(Order save, Product productDB, int quantity, BigDecimal price) {
+        OrderItem orderItem = new OrderItem();
+        orderItem.setOrders(save);
+        orderItem.setProduct(productDB);
+        orderItem.setQuantity(quantity);
+        orderItem.setPrice(price);
+        return orderItem;
+    }
+
+    private void completeOrderResponse(OrderResponse orderResponse, BigDecimal totalAmount, int id, String status) {
+        orderResponse.setTotalAmount(totalAmount);
+        orderResponse.setOrderNumber(id);
+        orderResponse.setStatus(status);
+    }
+
+    private BigDecimal prepareDataForItemListAndProduct(Order save, ShoppingCartResponse requestCreateOrder, Locale locale, OrderResponse orderResponse, List<OrderItem> orderItemsList, List<Product> productList) {
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        for (ItemShoppingCart itemShoppingCart : requestCreateOrder.getItemList()) {
+            Optional<Product> productRepositoryById = productRepository.findById(itemShoppingCart.getArticle());
+            if (productRepositoryById.isPresent()) {
+                Product productDB = productRepositoryById.get();
+
+                if (productDB.getQuantity() < itemShoppingCart.getQuantity()) {
+                    String message = getLocalizedMessage("application.controller.db.order.message.not_found", locale);
+                    orderResponse.addError(format(message, itemShoppingCart.getArticle(), itemShoppingCart.getOwnerId()));
+                    continue;
+                }
+
+                productDB.setQuantity(productDB.getQuantity() - itemShoppingCart.getQuantity());
+
+                orderItemsList.add(createOrderItem(save, productDB, itemShoppingCart.getQuantity(), itemShoppingCart.getPrice()));
+                productList.add(productDB);
+                totalAmount = totalAmount.add(itemShoppingCart.getPrice().multiply(BigDecimal.valueOf(itemShoppingCart.getQuantity())));
+            } else {
+                String message = getLocalizedMessage("application.controller.db.product.message.get", locale);
+                orderResponse.addError(format(message, itemShoppingCart.getOwnerId()));
+            }
+        }
+        return totalAmount;
+    }
+
+    private void writeDataToTheDatabase(List<OrderItem> orderItemsList, List<Product> productList, Order save) {
+        orderItemRepository.saveAll(orderItemsList);
+        productRepository.saveAll(productList);
+        orderRepository.save(save);
     }
 }

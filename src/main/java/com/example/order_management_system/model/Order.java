@@ -22,7 +22,6 @@ import lombok.Setter;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
@@ -51,6 +50,9 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    @Column(name = "additional_details")
+    private String additionalDetails;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private Customer owner;
@@ -76,18 +78,5 @@ public class Order {
     @PreUpdate
     protected void onUpdate() {
         this.updatedAt = new Date();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Order order = (Order) o;
-        return Objects.equals(totalAmount, order.totalAmount) && Objects.equals(status, order.status) && Objects.equals(createdAt, order.createdAt) && Objects.equals(updatedAt, order.updatedAt);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(totalAmount, status, createdAt, updatedAt);
     }
 }

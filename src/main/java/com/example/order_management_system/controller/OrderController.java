@@ -35,7 +35,7 @@ public class OrderController {
             throw new ExceptionValidatedRequestOrResponse(bindingResult);
         }
 
-        OrderResponse response = orderService.save(createOrderResponse, locale);
+        OrderResponse response = orderService.createOrder(createOrderResponse, locale);
 
         if (Objects.isNull(response.getError())) {
             return ResponseEntity.status(HttpStatus.OK).body(response);
