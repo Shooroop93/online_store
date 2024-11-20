@@ -19,6 +19,7 @@
    status (varchar) — Статус заказа ("Cancelled", "Pending", "Paid", "Shipped", "Delivered")
    created_at (timestamp) — Дата и время создания заказа
    updated_at (timestamp) — Дата и время последнего обновления заказа
+   additional_details (varchar(1000)) - Дополнительные сведения о сделке
 4. Таблица order_item (Товары в заказе)
    id (PK, bigint, auto-increment) — Идентификатор элемента заказа
    order_id (FK, bigint) — Ссылка на заказ
