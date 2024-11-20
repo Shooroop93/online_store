@@ -1,11 +1,19 @@
 package com.example.order_management_system.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -35,11 +43,13 @@ public class Product {
     @Column(name = "quantity")
     private int quantity;
 
-    @OneToMany(mappedBy = "product")
-    @Cascade({org.hibernate.annotations.CascadeType.REMOVE, org.hibernate.annotations.CascadeType.PERSIST})
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
     private List<OrderItem> orderItemList;
 
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     private Customer ownerProduct;
+
+    @OneToMany(mappedBy = "product", cascade = {CascadeType.REMOVE, CascadeType.PERSIST})
+    private List<ShoppingCart> shoppingCarts;
 }

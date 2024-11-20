@@ -57,7 +57,7 @@ public class CustomController {
     }
 
     @GetMapping(value = "/{id}", produces = "application/json;charset=UTF-8")
-    public ResponseEntity<?> getCustomer(@PathVariable Long id, Locale locale) {
+    public ResponseEntity<?> getCustomer(@PathVariable int id, Locale locale) {
         RegistrationResponse response = customerService.findById(id, locale);
         return Objects.nonNull(response.getError()) ?
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(response) :

@@ -1,6 +1,13 @@
 package com.example.order_management_system.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -39,6 +46,13 @@ public class Customer {
 
     @OneToMany(mappedBy = "ownerProduct", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Product> productsList;
+
+    @OneToMany(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<ShoppingCart> shoppingCarts;
+
+    public Customer(int id) {
+        this.id = id;
+    }
 
     public Customer(String firstName, String lastName, String email, String phone, String address) {
         this.firstName = firstName;

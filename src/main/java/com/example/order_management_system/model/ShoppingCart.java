@@ -13,32 +13,27 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @Entity
-@Table(name = "order_item")
-@Getter
+@Table(name = "shopping_cart")
 @Setter
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
-public class OrderItem {
+@NoArgsConstructor
+public class ShoppingCart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    @Column(name = "quantity")
-    private int quantity;
-
-    @Column(name = "price")
-    private BigDecimal price;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "id")
-    private Order orders;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id", referencedColumnName = "id")
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @Column(name = "count")
+    private int count;
 }

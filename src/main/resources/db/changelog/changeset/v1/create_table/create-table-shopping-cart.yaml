@@ -1,0 +1,58 @@
+databaseChangeLog:
+  - changeSet:
+      id: create table shopping_cart
+      author: Sergeev Roman
+      changes:
+        - createTable:
+            tableName: shopping_cart
+            remarks: Корзина для товаров
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: true
+                  remarks: Идентификатор товара в корзине
+              - column:
+                  name: customer_id
+                  type: bigint
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: false
+                    nullable: true
+                  remarks: Ссылка на клиента
+              - column:
+                  name: product_id
+                  type: bigint
+                  autoIncrement: false
+                  constraints:
+                    primaryKey: false
+                    nullable: true
+                    unique: true
+                  remarks: Ссылка на товар
+              - column:
+                  name: count
+                  type: bigint
+                  autoIncrement: false
+                  defaultValue: 0
+                  constraints:
+                    primaryKey: false
+                    nullable: true
+
+        - addForeignKeyConstraint:
+            baseTableName: shopping_cart
+            baseColumnNames: customer_id
+            constraintName: fk_customer_id_id
+            referencedTableName: customer
+            referencedColumnNames: id
+            onDelete: CASCADE
+
+        - addForeignKeyConstraint:
+            baseTableName: shopping_cart
+            baseColumnNames: product_id
+            constraintName: fk_product_id_id
+            referencedTableName: product
+            referencedColumnNames: id
+            onDelete: CASCADE

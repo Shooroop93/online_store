@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class Item {
 
     @JsonProperty("owner_ID")
-    private long ownerId;
+    private int ownerId;
 
     private long article;
 

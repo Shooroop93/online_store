@@ -32,13 +32,13 @@ public class CustomerService {
     }
 
     @Transactional(readOnly = true)
-    public RegistrationResponse findById(long id, Locale locale) {
+    public RegistrationResponse findById(int id, Locale locale) {
         Optional<Customer> customer = customerRepository.findById(id);
         return createAResponseForARequestToRetrieveACustomer(customer, id, locale);
     }
 
     @Transactional(readOnly = true)
-    public Optional<Customer> findById(long id) {
+    public Optional<Customer> findById(int id) {
         return customerRepository.findById(id);
     }
 
@@ -55,7 +55,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public void removeById(long id) {
+    public void removeById(int id) {
         customerRepository.deleteById(id);
     }
 
