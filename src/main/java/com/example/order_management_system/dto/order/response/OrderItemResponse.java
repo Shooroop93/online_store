@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ItemShoppingCart {
+public class OrderItemResponse {
 
     @JsonProperty("owner_ID")
     private int ownerId;

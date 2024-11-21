@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -74,5 +75,15 @@ public class ItemController {
         return Objects.nonNull(itemsResponse.getError()) ?
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(itemsResponse) :
                 ResponseEntity.ok().body(itemsResponse);
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<?> removeItemByID(@PathVariable int id) {
+        try {
+            productService.removeById(id);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
