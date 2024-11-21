@@ -1,5 +1,6 @@
-package com.example.order_management_system.controller;
+package com.example.order_management_system.controller.custom_controller;
 
+import com.example.order_management_system.controller.CustomController;
 import com.example.order_management_system.dto.registration.request.RegistrationRequest;
 import com.example.order_management_system.dto.registration.response.RegistrationResponse;
 import com.example.order_management_system.model.Customer;
@@ -23,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CustomController.class)
-class CustomControllerTest {
+class CustomControllerValidateRequestTest {
 
     @Autowired
     private MockMvc mockMvc;

@@ -1,5 +1,6 @@
-package com.example.order_management_system.controller;
+package com.example.order_management_system.controller.healt;
 
+import com.example.order_management_system.controller.DefaultController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

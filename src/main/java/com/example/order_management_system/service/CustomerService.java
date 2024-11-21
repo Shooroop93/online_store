@@ -44,14 +44,21 @@ public class CustomerService {
 
     @Transactional
     public Customer save(RegistrationRequest user) {
-        Customer customer = new Customer(user.getName(), user.getSurname(), user.getEmail(), user.getPhone(), user.getPhone());
+        Customer customer = new Customer(user.getName(), user.getSurname(), user.getEmail(), user.getPhone(), user.getAddress());
         return customerRepository.save(customer);
     }
 
     @Transactional
-    public void update(int id, Customer updateCustomer) {
-        updateCustomer.setId(id);
-        customerRepository.save(updateCustomer);
+    public void update(int id, RegistrationRequest updateCustomer) {
+        Customer customer = new Customer(
+                id,
+                updateCustomer.getName(),
+                updateCustomer.getSurname(),
+                updateCustomer.getEmail(),
+                updateCustomer.getPhone(),
+                updateCustomer.getAddress());
+
+        customerRepository.save(customer);
     }
 
     @Transactional
