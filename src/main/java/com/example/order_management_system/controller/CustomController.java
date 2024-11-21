@@ -56,7 +56,6 @@ public class CustomController {
             response.getError().getErrorList().add(format(localizedMessage, user.getEmail()));
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
-
     }
 
     @GetMapping(value = "/{id}")
