@@ -30,7 +30,7 @@ public class OrderResponse {
     private String status;
 
     @JsonProperty("item_list")
-    private List<ItemShoppingCart> itemList;
+    private List<OrderItemResponse> itemList;
     private String message;
     private MessageError error;
 
@@ -45,7 +45,7 @@ public class OrderResponse {
         this.error.getErrorList().add(message);
     }
 
-    public void addItem(ItemShoppingCart item) {
+    public void addItem(OrderItemResponse item) {
         if (this.itemList == null) {
             this.itemList = new ArrayList<>();
         }

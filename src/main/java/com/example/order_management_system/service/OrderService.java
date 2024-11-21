@@ -1,6 +1,7 @@
 package com.example.order_management_system.service;
 
 import com.example.order_management_system.constants.OrdersStatus;
+import com.example.order_management_system.dto.order.response.OrderItemResponse;
 import com.example.order_management_system.dto.order.response.OrderResponse;
 import com.example.order_management_system.dto.shopping_cart.response.ItemShoppingCart;
 import com.example.order_management_system.dto.shopping_cart.response.ShoppingCartResponse;
@@ -25,6 +26,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Optional;
 
+import static com.example.order_management_system.constants.OrdersStatus.CANCELLED;
 import static com.example.order_management_system.constants.OrdersStatus.PENDING;
 import static java.lang.String.format;
 import static org.apache.logging.log4j.Level.ERROR;
@@ -46,8 +48,32 @@ public class OrderService {
     }
 
     @Transactional(readOnly = true)
-    public Order findById(int id) {
-        return orderRepository.findById(id).orElse(null);
+    public OrderResponse findById(int id, Locale locale) {
+        Optional<Order> byId = orderRepository.findById(id);
+        OrderResponse orderResponse = new OrderResponse();
+
+        if (byId.isEmpty()) {
+            String message = getLocalizedMessage("application.controller.db.order.message.conflict", locale);
+            orderResponse.addError(format(message, id));
+            return orderResponse;
+        }
+
+        for (OrderItem orderItem : byId.get().getOrderItemList()) {
+            OrderItemResponse orderItemResponse = new OrderItemResponse();
+            orderItemResponse.setArticle(orderItem.getProduct().getId());
+            orderItemResponse.setItemName(orderItem.getProduct().getItemName());
+            orderItemResponse.setDescription(orderItem.getProduct().getDescription());
+            orderItemResponse.setPrice(orderItem.getPrice());
+            orderItemResponse.setQuantity(orderItem.getQuantity());
+
+            orderResponse.addItem(orderItemResponse);
+        }
+
+        orderResponse.setIdOwnerShoppingCart(byId.get().getOwner().getId());
+        orderResponse.setOrderNumber(id);
+        orderResponse.setStatus(byId.get().getStatus());
+
+        return orderResponse;
     }
 
     @Transactional
@@ -96,8 +122,25 @@ public class OrderService {
     }
 
     @Transactional
-    public void removeById(int id) {
-        orderRepository.deleteById(id);
+    public void cancelled(int id) {
+        Optional<Order> orderDB = orderRepository.findById(id);
+        if (orderDB.isEmpty()) {
+            throw new RuntimeException("Заказ отсутствует");
+        }
+
+        Order order = orderDB.get();
+
+        if (order.getStatus().equals(ERROR.name()) || order.getStatus().equals(CANCELLED.name())) {
+            throw new RuntimeException("Не активный заказ");
+        }
+
+        for (OrderItem orderItem : order.getOrderItemList()) {
+            Product product = productRepository.findById(orderItem.getProduct().getId()).get();
+            product.setQuantity(product.getQuantity() + orderItem.getQuantity());
+            productRepository.save(product);
+        }
+
+        order.setStatus(OrdersStatus.CANCELLED.name());
     }
 
     private String getLocalizedMessage(String messageKey, Locale locale, Object... args) {
