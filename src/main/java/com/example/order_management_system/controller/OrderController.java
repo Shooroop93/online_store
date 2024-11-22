@@ -41,7 +41,7 @@ public class OrderController {
         OrderResponse response = orderService.createOrder(createOrderResponse, locale);
 
         if (Objects.isNull(response.getError())) {
-            return ResponseEntity.status(HttpStatus.OK).body(response);
+            return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }

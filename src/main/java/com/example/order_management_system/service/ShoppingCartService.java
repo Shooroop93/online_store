@@ -1,6 +1,6 @@
 package com.example.order_management_system.service;
 
-import com.example.order_management_system.dto.shopping_cart.request.Item;
+import com.example.order_management_system.dto.shopping_cart.request.ShoppingCartItem;
 import com.example.order_management_system.dto.shopping_cart.request.ShoppingCartRequest;
 import com.example.order_management_system.dto.shopping_cart.response.ItemShoppingCart;
 import com.example.order_management_system.dto.shopping_cart.response.ShoppingCartResponse;
@@ -8,7 +8,6 @@ import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.model.Product;
 import com.example.order_management_system.model.ShoppingCart;
 import com.example.order_management_system.repository.CustomerRepository;
-import com.example.order_management_system.repository.ProductRepository;
 import com.example.order_management_system.repository.ShoppingCartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -27,14 +26,8 @@ public class ShoppingCartService {
 
     private final ShoppingCartRepository shoppingCartRepository;
     private final CustomerRepository customerRepository;
-    private final ProductRepository ProductRepository;
 
     private final MessageSource messageSource;
-
-    @Transactional(readOnly = true)
-    public void findAll() {
-
-    }
 
     @Transactional(readOnly = true)
     public ShoppingCartResponse findById(int id, Locale locale) {
@@ -64,7 +57,7 @@ public class ShoppingCartService {
             itemShoppingCart.setItemName(product.getItemName());
             itemShoppingCart.setDescription(product.getDescription());
             itemShoppingCart.setPrice(product.getPrice());
-            itemShoppingCart.setQuantity(product.getQuantity());
+            itemShoppingCart.setQuantity(shoppingCart.getCount());
 
             shoppingCartResponse.addItem(itemShoppingCart);
         }
@@ -86,7 +79,7 @@ public class ShoppingCartService {
 
         Customer ownerShoppingCartResponse = customerRepositoryById.get();
 
-        for (Item item : shoppingCartRequest.getItemsList()) {
+        for (ShoppingCartItem item : shoppingCartRequest.getItemsList()) {
             Optional<Customer> customer = customerRepository.findById(item.getOwnerId());
 
             if (customer.isEmpty()) {
@@ -138,11 +131,6 @@ public class ShoppingCartService {
         }
 
         return response;
-    }
-
-    @Transactional
-    public void update(int id, Product updateProduct) {
-
     }
 
     @Transactional

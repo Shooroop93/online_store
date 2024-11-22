@@ -15,8 +15,15 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemsResponse {
 
+    private int id = -1;
+    private String message;
     private List<Item> itemList;
     private MessageError error;
+
+    public ItemsResponse(int id, String message) {
+        this.id = id;
+        this.message = message;
+    }
 
     public void addItem(Item item) {
         if (itemList == null) {

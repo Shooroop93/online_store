@@ -3,10 +3,7 @@ package com.example.order_management_system.controller;
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
 import com.example.order_management_system.dto.items.request.ItemRequest;
-import com.example.order_management_system.dto.items.response.ItemsResponse;
-import com.example.order_management_system.dto.registration.response.MessageError;
-import com.example.order_management_system.dto.registration.response.RegistrationResponse;
-import com.example.order_management_system.service.ProductService;
+import com.example.order_management_system.dto.items.response.ItemsResponse;import com.example.order_management_system.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -49,12 +45,12 @@ public class ItemController {
         try {
             productService.save(itemRequest);
             String message = messageSource.getMessage("application.controller.db.product.message.created", new Object[0], locale);
-            RegistrationResponse response = new RegistrationResponse(itemRequest.getOwnerId(), format(message, itemRequest.getOwnerId()));
+            ItemsResponse response = new ItemsResponse(itemRequest.getOwnerId(), format(message, itemRequest.getOwnerId()));
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
-            RegistrationResponse response = new RegistrationResponse(new MessageError(new ArrayList<>()));
+            ItemsResponse response = new ItemsResponse();
             String message = messageSource.getMessage("application.controller.db.product.message.conflict", new Object[0], locale);
-            response.getError().getErrorList().add(format(message, itemRequest.getOwnerId()));
+            response.addError(format(message, itemRequest.getOwnerId()));
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
     }

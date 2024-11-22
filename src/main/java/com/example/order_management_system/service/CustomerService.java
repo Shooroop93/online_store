@@ -66,7 +66,7 @@ public class CustomerService {
         customerRepository.deleteById(id);
     }
 
-    private RegistrationResponse createAResponseForARequestToRetrieveACustomer(Optional<Customer> customer, long id, Locale locale) {
+    private RegistrationResponse createAResponseForARequestToRetrieveACustomer(Optional<Customer> customer, int id, Locale locale) {
         RegistrationResponse response;
 
         if (customer.isEmpty()) {
