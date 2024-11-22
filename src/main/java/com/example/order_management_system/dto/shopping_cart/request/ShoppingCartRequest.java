@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -22,5 +23,12 @@ public class ShoppingCartRequest {
     @JsonProperty("item_list")
     @NotNull(message = "{application.dto.notNull}")
     @NotEmpty(message = "{application.dto.notEmpty}")
-    private List<Item> itemsList;
+    private List<ShoppingCartItem> itemsList;
+
+    public void addItem(ShoppingCartItem item) {
+        if (this.itemsList == null) {
+            this.itemsList = new ArrayList<>();
+        }
+        this.itemsList.add(item);
+    }
 }

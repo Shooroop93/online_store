@@ -14,7 +14,7 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class RegistrationResponse {
 
-    private long id = -1;
+    private int id = -1;
     private List<Participant> participants;
     private String message;
     @JsonProperty("error")
@@ -24,7 +24,7 @@ public class RegistrationResponse {
         this.error = error;
     }
 
-    public RegistrationResponse(long id, String message) {
+    public RegistrationResponse(int id, String message) {
         this.id = id;
         this.message = message;
     }
