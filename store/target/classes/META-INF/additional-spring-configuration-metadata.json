@@ -1,7 +1,0 @@
-{
-  "properties": [{
-    "name" : "application.notices.health",
-    "type": "java.lang.String",
-    "description": "Returns the value when a GET call to /health is invoked."
-  }]
-}
