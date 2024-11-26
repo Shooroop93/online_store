@@ -5,6 +5,8 @@
 
 	<modules>
 		<module>store</module>
+		<module>wallet</module>
+		<module>delivery</module>
 	</modules>
 
 	<parent>
