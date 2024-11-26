@@ -1,0 +1,5 @@
+com\example\order_management_system\service\CustomerServiceIntegrationTest.class
+com\example\order_management_system\e2e\OnlineStoreE2ETest.class
+com\example\order_management_system\controller\custom_controller\CustomControllerValidateRequestTest.class
+com\example\order_management_system\service\DefaultIntegrationClass.class
+com\example\order_management_system\controller\healt\DefaultControllerTest.class
