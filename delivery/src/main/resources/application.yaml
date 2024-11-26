@@ -2,7 +2,7 @@ spring:
   profiles:
     active: secrets
   application:
-    name: store
+    name: delivery
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/changelog-master.yaml
@@ -12,7 +12,7 @@ spring:
     hibernate:
       ddl-auto: none
 server:
-  port : 8080
+  port : 8082
   servlet:
     encoding:
       charset: UTF-8
