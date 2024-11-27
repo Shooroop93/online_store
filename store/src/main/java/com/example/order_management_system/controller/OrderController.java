@@ -17,9 +17,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.RestClient;
 
 import java.util.Locale;
 import java.util.Objects;
+
+import static com.example.order_management_system.constants.OrdersStatus.ERROR;
+import static com.example.order_management_system.constants.OrdersStatus.PAID;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @Controller
 @Slf4j
@@ -29,6 +34,10 @@ import java.util.Objects;
 public class OrderController {
 
     private final OrderService orderService;
+
+    private RestClient getRestClientInstance() {
+        return RestClient.create();
+    }
 
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@RequestBody ShoppingCartResponse createOrderResponse, BindingResult bindingResult, Locale locale)
@@ -67,5 +76,36 @@ public class OrderController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @PostMapping("/pay/{id}")
+    public ResponseEntity<?> payOrder(@PathVariable int id, Locale locale) {
+        OrderResponse response = orderService.findById(id, locale);
+
+        int statusCode = 0;
+        try {
+            ResponseEntity<Void> bodilessEntity = getRestClientInstance().post()
+                    .uri("http://localhost:8081/api/v1/wallet/stubPayOrder")
+                    .contentType(APPLICATION_JSON)
+                    .body(response)
+                    .retrieve().toBodilessEntity();
+            statusCode = bodilessEntity.getStatusCode().value();
+        } catch (Exception e) {
+            statusCode = 400;
+        }
+
+        if (statusCode == 200) {
+            response.setStatus(PAID.name());
+            changeOrderStatus(id, response);
+        } else {
+            response.setStatus(ERROR.name());
+            changeOrderStatus(id, response);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    private void changeOrderStatus(int id, OrderResponse response) {
+        orderService.updateOrderStatus(id, response);
     }
 }
