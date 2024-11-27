@@ -15,6 +15,7 @@ import com.example.order_management_system.repository.OrderRepository;
 import com.example.order_management_system.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -69,6 +70,7 @@ public class OrderService {
             orderResponse.addItem(orderItemResponse);
         }
 
+        orderResponse.setTotalAmount(byId.get().getTotalAmount());
         orderResponse.setIdOwnerShoppingCart(byId.get().getOwner().getId());
         orderResponse.setOrderNumber(id);
         orderResponse.setStatus(byId.get().getStatus());
@@ -116,9 +118,15 @@ public class OrderService {
     }
 
     @Transactional
-    public void update(int id, Order updateOrder) {
-        updateOrder.setId(id);
-        orderRepository.save(updateOrder);
+    public ResponseEntity<?> updateOrderStatus(int id, OrderResponse response) {
+        Optional<Order> byId = orderRepository.findById(id);
+        if (byId.isPresent()) {
+            Order order = byId.get();
+            order.setStatus(response.getStatus());
+            orderRepository.save(order);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @Transactional
