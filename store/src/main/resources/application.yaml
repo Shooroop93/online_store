@@ -21,6 +21,3 @@ server:
 application:
   notices:
     health: UP
-  url:
-    wallet:
-      stub_pay_order: http://localhost:8081/api/v1/wallet/stubPayOrder
