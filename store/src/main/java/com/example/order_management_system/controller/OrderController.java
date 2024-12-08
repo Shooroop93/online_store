@@ -2,8 +2,8 @@ package com.example.order_management_system.controller;
 
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
-import com.example.order_management_system.dto.order.response.OrderResponse;
-import com.example.order_management_system.dto.shopping_cart.response.ShoppingCartResponse;
+import com.schemes.dto.order.response.OrderResponse;
+import com.schemes.dto.shopping_cart.response.ShoppingCartResponse;
 import com.example.order_management_system.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

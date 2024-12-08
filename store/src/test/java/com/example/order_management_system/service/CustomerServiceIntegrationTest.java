@@ -1,6 +1,6 @@
 package com.example.order_management_system.service;
 
-import com.example.order_management_system.dto.registration.request.RegistrationRequest;
+import com.schemes.dto.registration.request.RegistrationRequest;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;

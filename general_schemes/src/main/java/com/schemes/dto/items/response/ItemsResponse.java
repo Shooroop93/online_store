@@ -1,6 +1,6 @@
-package com.example.order_management_system.dto.items.response;
+package com.schemes.dto.items.response;
 
-import com.example.order_management_system.dto.registration.response.MessageError;
+import com.schemes.dto.registration.response.MessageError;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -2,11 +2,11 @@ package com.example.order_management_system.controller;
 
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
-import com.example.order_management_system.dto.registration.request.RegistrationRequest;
-import com.example.order_management_system.dto.registration.response.MessageError;
-import com.example.order_management_system.dto.registration.response.RegistrationResponse;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.service.CustomerService;
+import com.schemes.dto.registration.request.RegistrationRequest;
+import com.schemes.dto.registration.response.MessageError;
+import com.schemes.dto.registration.response.RegistrationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;

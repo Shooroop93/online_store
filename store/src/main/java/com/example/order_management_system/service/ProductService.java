@@ -1,8 +1,8 @@
 package com.example.order_management_system.service;
 
-import com.example.order_management_system.dto.items.request.ItemRequest;
-import com.example.order_management_system.dto.items.response.Item;
-import com.example.order_management_system.dto.items.response.ItemsResponse;
+import com.schemes.dto.items.request.ItemRequest;
+import com.schemes.dto.items.response.Item;
+import com.schemes.dto.items.response.ItemsResponse;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.model.Product;
 import com.example.order_management_system.repository.ProductRepository;

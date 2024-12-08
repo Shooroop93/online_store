@@ -1,4 +1,4 @@
-package com.example.order_management_system.dto.registration.response;
+package com.schemes.dto.registration.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

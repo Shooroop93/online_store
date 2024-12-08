@@ -1,10 +1,10 @@
 package com.example.order_management_system.controller.custom_controller;
 
 import com.example.order_management_system.controller.CustomController;
-import com.example.order_management_system.dto.registration.request.RegistrationRequest;
-import com.example.order_management_system.dto.registration.response.RegistrationResponse;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.service.CustomerService;
+import com.schemes.dto.registration.request.RegistrationRequest;
+import com.schemes.dto.registration.response.RegistrationResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;

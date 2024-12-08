@@ -1,9 +1,9 @@
 package com.example.order_management_system.service;
 
-import com.example.order_management_system.dto.shopping_cart.request.ShoppingCartItem;
-import com.example.order_management_system.dto.shopping_cart.request.ShoppingCartRequest;
-import com.example.order_management_system.dto.shopping_cart.response.ItemShoppingCart;
-import com.example.order_management_system.dto.shopping_cart.response.ShoppingCartResponse;
+import com.schemes.dto.shopping_cart.request.ShoppingCartItem;
+import com.schemes.dto.shopping_cart.request.ShoppingCartRequest;
+import com.schemes.dto.shopping_cart.response.ItemShoppingCart;
+import com.schemes.dto.shopping_cart.response.ShoppingCartResponse;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.model.Product;
 import com.example.order_management_system.model.ShoppingCart;

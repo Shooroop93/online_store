@@ -1,4 +1,4 @@
-package com.example.order_management_system.dto.items.response;
+package com.schemes.dto.shopping_cart.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,12 +12,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Item {
+public class ItemShoppingCart {
 
     @JsonProperty("owner_ID")
     private int ownerId;
 
-    private long article;
+    private int article;
 
     @JsonProperty("item_name")
     private String itemName;
