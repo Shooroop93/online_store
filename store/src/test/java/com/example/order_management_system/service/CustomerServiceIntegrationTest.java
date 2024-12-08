@@ -6,12 +6,15 @@ import com.example.order_management_system.repository.CustomerRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ImportAutoConfiguration(exclude = KafkaAutoConfiguration.class)
 class CustomerServiceIntegrationTest extends DefaultIntegrationClass{
 
     @Autowired

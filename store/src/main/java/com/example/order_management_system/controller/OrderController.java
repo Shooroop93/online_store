@@ -7,8 +7,10 @@ import com.example.order_management_system.dto.shopping_cart.response.ShoppingCa
 import com.example.order_management_system.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,6 +36,11 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 public class OrderController {
 
     private final OrderService orderService;
+
+    @Value("${application.url.wallet.stub_pay_order}")
+    private String urlWalletStubPayOrder;
+
+    private final KafkaTemplate<String, OrderResponse> kafkaTemplate;
 
     private RestClient getRestClientInstance() {
         return RestClient.create();
@@ -82,10 +89,10 @@ public class OrderController {
     public ResponseEntity<?> payOrder(@PathVariable int id, Locale locale) {
         OrderResponse response = orderService.findById(id, locale);
 
-        int statusCode = 0;
+        int statusCode;
         try {
             ResponseEntity<Void> bodilessEntity = getRestClientInstance().post()
-                    .uri("http://localhost:8081/api/v1/wallet/stubPayOrder")
+                    .uri(urlWalletStubPayOrder)
                     .contentType(APPLICATION_JSON)
                     .body(response)
                     .retrieve().toBodilessEntity();
@@ -97,6 +104,7 @@ public class OrderController {
         if (statusCode == 200) {
             response.setStatus(PAID.name());
             changeOrderStatus(id, response);
+            kafkaTemplate.send("delivery-event-topic", response);
         } else {
             response.setStatus(ERROR.name());
             changeOrderStatus(id, response);

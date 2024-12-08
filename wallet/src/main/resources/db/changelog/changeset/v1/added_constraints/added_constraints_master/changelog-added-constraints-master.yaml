@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/v1/added_constraints/product/v1/add-column-owner-id-for-product-table.yaml
+  - include:
+      file: db/changelog/changeset/v1/added_constraints/product/v1/add-foreign-key-constrains-for-product-table.yaml
+  - include:
+      file: db/changelog/changeset/v1/added_constraints/order/v1/add-column-additional-details-for-table-orders.yaml

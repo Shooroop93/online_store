@@ -9,7 +9,7 @@ on:
       - 'master'
 
 jobs:
-  build:
+  delivery:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,37 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
-      - name: compile
-        run: mvn -B clean compile
-      - name: test
-        run: mvn -B test
+      - name: Compilation and testing of the 'delivery' project
+        run: |
+          cd delivery
+          mvn -B clean compile test
+
+  store:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17 for x64
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          architecture: x64
+      - name: Compilation and testing of the 'store' project
+        run: |
+          cd store
+          mvn -B clean compile test
+
+  wallet:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17 for x64
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          architecture: x64
+      - name: Compilation and testing of the 'wallet' project
+        run: |
+          cd wallet
+          mvn -B clean compile test

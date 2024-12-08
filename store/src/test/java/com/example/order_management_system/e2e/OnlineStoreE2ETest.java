@@ -15,14 +15,14 @@ import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.model.Product;
 import com.example.order_management_system.repository.ProductRepository;
 import com.example.order_management_system.service.CustomerService;
-import com.example.order_management_system.service.OrderService;
 import com.example.order_management_system.service.ProductService;
-import com.example.order_management_system.service.ShoppingCartService;
 import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.SpringLiquibase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +48,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Testcontainers
+@ImportAutoConfiguration(exclude = KafkaAutoConfiguration.class)
 public class OnlineStoreE2ETest {
 
     @Autowired
