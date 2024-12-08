@@ -1,4 +1,4 @@
-package com.example.delivery.controller;
+package com.example.order_management_system.controller;
 
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @ConfigurationProperties(prefix = "application.notices")
 @Setter
-@RequestMapping(value = "/api/v1/delivery/")
+@RequestMapping(value = "/api/v1/store/")
 public class DefaultController {
 
     private String health;

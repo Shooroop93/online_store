@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - changeSet:
+      id: addForeignKeyConstraint
+      author: Sergeev Roman
+      changes:
+
+        - addForeignKeyConstraint:
+            baseTableName: product
+            baseColumnNames: owner_id
+            constraintName: fk_owner_id_for_customer_id
+            referencedTableName: customer
+            referencedColumnNames: id
+            onDelete: CASCADE
