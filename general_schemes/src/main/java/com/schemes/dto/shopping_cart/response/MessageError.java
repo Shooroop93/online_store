@@ -1,4 +1,4 @@
-package com.example.order_management_system.dto.order.response;
+package com.schemes.dto.shopping_cart.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,10 +17,5 @@ public class MessageError {
 
     public MessageError(List<String> errorList) {
         this.errorList = errorList;
-    }
-
-    @Override
-    public String toString() {
-        return "errorList=" + errorList;
     }
 }

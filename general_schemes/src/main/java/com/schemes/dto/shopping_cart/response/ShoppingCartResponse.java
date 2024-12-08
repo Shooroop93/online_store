@@ -1,4 +1,4 @@
-package com.example.order_management_system.dto.shopping_cart.response;
+package com.schemes.dto.shopping_cart.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

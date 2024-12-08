@@ -1,4 +1,4 @@
-package com.example.order_management_system.dto.registration.request;
+package com.schemes.dto.registration.request;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

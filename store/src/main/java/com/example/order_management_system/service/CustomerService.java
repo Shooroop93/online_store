@@ -1,9 +1,9 @@
 package com.example.order_management_system.service;
 
-import com.example.order_management_system.dto.registration.request.RegistrationRequest;
-import com.example.order_management_system.dto.registration.response.MessageError;
-import com.example.order_management_system.dto.registration.response.Participant;
-import com.example.order_management_system.dto.registration.response.RegistrationResponse;
+import com.schemes.dto.registration.request.RegistrationRequest;
+import com.schemes.dto.registration.response.MessageError;
+import com.schemes.dto.registration.response.Participant;
+import com.schemes.dto.registration.response.RegistrationResponse;
 import com.example.order_management_system.model.Customer;
 import com.example.order_management_system.repository.CustomerRepository;
 

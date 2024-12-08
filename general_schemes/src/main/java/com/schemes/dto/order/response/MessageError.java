@@ -1,4 +1,4 @@
-package com.example.order_management_system.dto.shopping_cart.response;
+package com.schemes.dto.order.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
+
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MessageError {
@@ -17,5 +18,10 @@ public class MessageError {
 
     public MessageError(List<String> errorList) {
         this.errorList = errorList;
+    }
+
+    @Override
+    public String toString() {
+        return "errorList=" + errorList;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.order_management_system.config;
 
-import com.example.order_management_system.dto.order.response.OrderResponse;
+import com.schemes.dto.order.response.OrderResponse;
 import lombok.RequiredArgsConstructor;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerConfig;

@@ -2,8 +2,9 @@ package com.example.order_management_system.controller;
 
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
-import com.example.order_management_system.dto.items.request.ItemRequest;
-import com.example.order_management_system.dto.items.response.ItemsResponse;import com.example.order_management_system.service.ProductService;
+import com.example.order_management_system.service.ProductService;
+import com.schemes.dto.items.request.ItemRequest;
+import com.schemes.dto.items.response.ItemsResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;

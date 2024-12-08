@@ -2,9 +2,9 @@ package com.example.order_management_system.controller;
 
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
-import com.example.order_management_system.dto.shopping_cart.request.ShoppingCartRequest;
-import com.example.order_management_system.dto.shopping_cart.response.ShoppingCartResponse;
 import com.example.order_management_system.service.ShoppingCartService;
+import com.schemes.dto.shopping_cart.request.ShoppingCartRequest;
+import com.schemes.dto.shopping_cart.response.ShoppingCartResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

@@ -2,8 +2,8 @@ package com.example.order_management_system.controller.advice;
 
 import com.example.order_management_system.controller.annotation.CustomControllerHandler;
 import com.example.order_management_system.controller.exception.ExceptionValidatedRequestOrResponse;
-import com.example.order_management_system.dto.registration.response.MessageError;
-import com.example.order_management_system.dto.registration.response.RegistrationResponse;
+import com.schemes.dto.registration.response.MessageError;
+import com.schemes.dto.registration.response.RegistrationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;

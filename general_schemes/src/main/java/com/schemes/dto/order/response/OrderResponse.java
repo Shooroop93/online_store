@@ -1,4 +1,4 @@
-package com.example.order_management_system.dto.order.response;
+package com.schemes.dto.order.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
