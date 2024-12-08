@@ -41,6 +41,7 @@ jobs:
 
   store:
     runs-on: ubuntu-20.04
+    needs: general_schemes
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 17 for x64
@@ -51,9 +52,6 @@ jobs:
           architecture: x64
       - name: Compilation and testing of the 'store' project
         run: |
-          cd general_schemes
-          mvn -B clean compile install
-          cd ..
           cd store
           mvn -B clean compile test
 
