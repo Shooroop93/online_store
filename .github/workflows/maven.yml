@@ -52,6 +52,9 @@ jobs:
           architecture: x64
       - name: Compilation and testing of the 'store' project
         run: |
+          cd general_schemes
+          mvn -B clean compile install
+          cd ..
           cd store
           mvn -B clean compile test
 
