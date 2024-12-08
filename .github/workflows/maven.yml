@@ -19,7 +19,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
-      - name: Compile and Test Project 1
+      - name: Compilation and testing of the 'delivery' project
         run: |
           cd delivery
           mvn -B clean compile test
@@ -34,7 +34,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
-      - name: Compile and Test Project 2
+      - name: Compilation and testing of the 'store' project
         run: |
           cd store
           mvn -B clean compile test
@@ -49,7 +49,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           architecture: x64
-      - name: Compile and Test Project 3
+      - name: Compilation and testing of the 'wallet' project
         run: |
           cd wallet
           mvn -B clean compile test
