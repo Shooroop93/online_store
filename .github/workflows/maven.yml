@@ -36,6 +36,9 @@ jobs:
           architecture: x64
       - name: Compilation and testing of the 'delivery' project
         run: |
+          cd general_schemes
+          mvn -B clean compile install
+          cd ..
           cd delivery
           mvn -B clean compile test
 
